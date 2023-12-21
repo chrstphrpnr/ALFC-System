@@ -27,5 +27,5 @@ Route::get('/Sales-Associate', function () {
 });
 
 Route::get('/Sales-Associate/Marketing-Arms/', function () {
-    return view('Users/Sales_Associate/ApplicationForms/Index');
+    return view('Users/Sales_Associate/ApplicationForms/marketing-arm');
 });

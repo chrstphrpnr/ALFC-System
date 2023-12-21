@@ -7,7 +7,7 @@
     .card-container {
       display: flex;
       justify-content: space-between;
-      margin: 30px; /* Adjust margin between cards */
+      margin: 10px; /* Adjust margin between cards */
     }
 
 
@@ -188,12 +188,6 @@
         }
 
     }
-
-
-
-
-
-
 
 </style>
 

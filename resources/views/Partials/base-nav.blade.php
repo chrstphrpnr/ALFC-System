@@ -1,3 +1,5 @@
+
+<link rel="stylesheet" href="{{ asset('assets/bootstrap-v4.0.0.min.css') }}">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
         <img src="{{ asset('assets/ALFC Logo nav.png') }}" alt="Your Image Alt Text">

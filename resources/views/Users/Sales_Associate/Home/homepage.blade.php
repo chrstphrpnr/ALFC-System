@@ -188,6 +188,22 @@
         }
 
     }
+    
+    @media screen and (min-width: 1600px) and (max-width: 1920px) 
+    {
+       .card-container{
+        margin-top:70px;
+        transform:scale(1.2);
+       }
+       .main-title{
+        font-size:100px;
+       }
+       .title-desc{
+        font-size:50px;
+       }
+    }
+  
+
 
 </style>
 

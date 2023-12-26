@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('insurance_providers', function (Blueprint $table) {
             $table->id();
             $table->string('provider_name');
-            $table->string('provider_logo');
+            $table->string('provider_logo')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -188,8 +188,8 @@
         }
 
     }
-    
-    @media screen and (min-width: 1600px) and (max-width: 1920px) 
+
+    @media screen and (min-width: 1600px) and (max-width: 1920px)
     {
        .card-container{
         margin-top:70px;
@@ -202,7 +202,7 @@
         font-size:50px;
        }
     }
-  
+
 
 
 </style>
@@ -218,7 +218,7 @@
 
         <div class="card-container">
 
-            <a href="#" style="text-decoration: none;">
+            <a href="{{ route('sales-associate.marketing-arms') }}" style="text-decoration: none;">
                 <div class="card">
                     <div class="agent-text" style="font-size:35px">MARKETING ARMS</div>
                     <div class="agent-image"></div>

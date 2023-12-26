@@ -70,7 +70,8 @@
         <div class="row justify-content-center mt-lg-5">
             <div class="landing-title text-center mt-5">ALFC</div>
             <div class="landing-desc text-center">Insurance Agency Corporation</div>
-            <button class="btn btn-get-started mt-3">Get Started</button>
+            {{-- <button class="btn btn-get-started mt-3">Get Started</button> --}}
+            <a href="{{ route('sales-associate.home') }}" class="btn btn-get-started mt-3">Get Started</a>
         </div>
     </div>
 

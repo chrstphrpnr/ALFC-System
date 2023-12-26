@@ -24,8 +24,8 @@ Route::get('/login', function () {
 
 Route::get('/Sales-Associate', function () {
     return view('Users/Sales_Associate/Home/homepage');
-});
+})->name('sales-associate.home');
 
 Route::get('/Sales-Associate/Marketing-Arms/', function () {
     return view('Users/Sales_Associate/ApplicationForms/marketing-arm');
-});
+})->name('sales-associate.marketing-arms');

@@ -225,7 +225,7 @@
                 </div>
             </a>
 
-            <a href="#" style="text-decoration: none;">
+            <a href="{{ route('insurance.providers.index') }}" style="text-decoration: none;">
                 <div class="card">
                     <div class="providers-text" style="font-size:35px">INSURANCES</div>
                         <div class="providers-image"></div>

@@ -540,12 +540,7 @@
             </div>
         </div>
 
-    </div>
-    {{-- Button Addition Function --}}
-    <script>
 
-
-    </script>
 
     {{-- Disable Non-Numerical Values --}}
     <script>
@@ -663,7 +658,6 @@
     </script>
 
     <script>
-
 
         // ++++++++++++++++++++++++++-
         document.getElementById('continue').addEventListener('click', function() {
@@ -1082,7 +1076,7 @@
                 }
 
             }
-
+            let isRateValid = true;
             function validateRate(decimalRateValue) {
 
                 if (decimalRateValue) {
@@ -1093,7 +1087,7 @@
 
                     if (coverageName && groupedRates[coverageName]) {
                         let errorMessage = '';
-
+                        isRateValid = true;
                         groupedRates[coverageName].forEach(rate => {
                             let setRateMin = rate.setRateMinimum;
                             let setRateMax = rate.setRateMaximum;
@@ -1118,11 +1112,23 @@
                             } else {
 
                                 if (inputRate < setRateMin) {
-                                    event.target.classList.add('is-invalid');
+                                    isRateValid = false;
+                                    let premiumDueField = document.getElementById(`premium_due_${coverageName}`);
+                                    if (premiumDueField) {
+                                        premiumDueField.value = ''; // Clear the premium due field
+                                        event.target.classList.add('is-invalid');
                                     errorMessage = 'Input is lower than the minimum limit of ' + formattedRateMin + '% for ' + coverageName;
+                                    }
+
                                 } else if (inputRate > setRateMax) {
-                                    event.target.classList.add('is-invalid');
+                                    isRateValid = false;
+                                    let premiumDueField = document.getElementById(`premium_due_${coverageName}`);
+                                    if (premiumDueField) {
+                                        premiumDueField.value = ''; // Clear the premium due field
+                                        event.target.classList.add('is-invalid');
                                     errorMessage = 'Input is higher than the maximum limit of ' + formattedRateMax + '% for ' + coverageName;
+                                    }
+
                                 } else {
                                     event.target.classList.remove('is-invalid');
                                 }
@@ -1166,7 +1172,7 @@
             }
 
             function conditionalPremiumDue(event) {
-                if (event.target) {
+                if (event.target && isRateValid) {
                     let coverageName = event.target.dataset.coverage;
 
                     if (coverageName && groupedRates[coverageName]) {
@@ -1232,6 +1238,7 @@
 
                     }
                 }
+
             }
 
             function calculateAOGPremium() {
@@ -1269,18 +1276,26 @@
             }
 
             function replaceWithInput() {
+                // Assuming you have an input element with ID 'lgtInput'
+                const inputElement = document.getElementById('lgtInput');
+                const selectElement = document.getElementById('lgtSelect');
+
+                if (!inputElement || !selectElement) {
+                    console.error("Elements not found!");
+                    return;
+                }
+
                 // Hide the select and display the input
-                const select = document.getElementById('lgtSelect');
-                const selectedValue = select.options[select.selectedIndex].value;
-                calculateLGT(selectedValue);
+                const selectedValue = selectElement.options[selectElement.selectedIndex].value;
+
                 selectElement.style.display = 'none';
                 inputElement.style.display = 'block';
 
-                // Transfer the selected value to the input
-                inputElement.value = selectElement.value;
+                // Transfer the selected value to the input and calculate LGT
+                inputElement.value = selectedValue;
                 calculateLGT(selectedValue);
-
             }
+
 
             function calculateLGT(selectedValue) {
                 console.log("calculateLGT called");
@@ -1711,12 +1726,12 @@
                         console.log('Initial Field Values:', initialFieldValues);
                         console.log('Dynamic Field Values:', dynamicFieldValues);
 
-                        console.log('Total Expenses:', DeductionsTotalExpenses);
-                        console.log('Vat:', DeductionsVat);
-                        console.log('Sales Credit:', DeductionsSalesCredit);
-                        console.log('Percentage:', DeductionsScPercentage);
-                        console.log('Marketing Fund:', marketingFundAmount);
-
+//                         console.log('Total Expenses:', DeductionsTotalExpenses);
+//                         console.log('Vat:', DeductionsVat);
+//                         console.log('Sales Credit:', DeductionsSalesCredit);
+//                         console.log('Percentage:', DeductionsScPercentage);
+//                         console.log('Marketing Fund:', marketingFundAmount);
+//
 
 
 
@@ -1764,8 +1779,9 @@
 
 
             discountInput.addEventListener('change', calculateNetFromDiscount);
+            document.getElementById('lgtInput').addEventListener('click', resetLGTSelect);
 
-            selectElement.addEventListener('change',replaceWithInput);
+            document.getElementById('lgtSelect').addEventListener('change', replaceWithInput);
 
             document.addEventListener('change', function(event) {
                 conditionalPremiumDue(event);
@@ -1782,6 +1798,7 @@
                 input.addEventListener('input', validateRate);
 
             });
+
 
             if (continueButton) {
                 continueButton.addEventListener('click', function() {

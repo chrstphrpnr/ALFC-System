@@ -16,7 +16,6 @@
 </head>
 <body>
 
-    @include('Partials.base-nav')
 
     <div>
         @yield('content')

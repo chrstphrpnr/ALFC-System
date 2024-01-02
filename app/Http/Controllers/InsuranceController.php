@@ -7,6 +7,8 @@ use App\Models\InsuranceProvider;
 use App\Models\InsuranceProduct;
 use App\Models\InsuranceCoverage;
 use App\Models\InsuranceComputation;
+use App\Models\Quotation;
+use App\Models\InsuredQuotationDetails;
 
 use DB;
 
@@ -46,6 +48,11 @@ class InsuranceController extends Controller
     }
 
     public function getComputationRates($providerId, $productId) {
+
+        $productName = DB::table('insurance_products')
+        ->where('id', $productId)
+        ->value('insurance_products.product_name');
+
         $providerProduct = DB::table('provider_products')
             ->where('insurance_provider_id', $providerId)
             ->where('insurance_product_id', $productId)
@@ -72,7 +79,7 @@ class InsuranceController extends Controller
             // DD($groupedRates);
 
             // Pass $computationRates data to the view
-            return view('Users/Sales_Associate/Insurance/form_quotation', compact('computationRates','groupedRates'));
+            return view('Users/Sales_Associate/Insurance/form_quotation', compact('productName', 'computationRates','groupedRates'));
         } else {
             // Handle case when no computation rates are found for the selected category and provider
             return redirect()->route('insurance.products', ['providerId' => $providerId])->with('error', 'No computation rates found for this category and provider.');
@@ -80,5 +87,82 @@ class InsuranceController extends Controller
     }
 
 
+
+    public function storeQuotation(Request $request)
+    {
+        $quotation_num = rand();
+
+        $coverages = $request->input('coverages');
+        $insuredFullName = $request->input('insuredFullName');
+        $insuredCarClassification = $request->input('insuredCarClassification');
+        $unitModel = $request->input('unitModel');
+        $plateNo = $request->input('plateNo');
+        $effectivityType = $request->input('effectivityType');
+
+        $insuredNetPremium = $request->input('insuredNetPremium');
+        $insuredDstAmount = $request->input('insuredDstAmount');
+        $insuredVatAmount = $request->input('insuredVatAmount');
+        $insuredRapAmount = $request->input('insuredRapAmount');
+        $insuredLGTAmount = $request->input('insuredLGTAmount');
+        $insuredGrossPremium = $request->input('insuredGrossPremium');
+
+        $totalProviderPremiumDue = $request->input('totalProviderPremiumDue');
+        $providerDST = $request->input('providerDST');
+        $providerVAT = $request->input('providerVAT');
+        $providerLGT = $request->input('providerLGT');
+        $providerRAP = $request->input('providerRAP');
+        $totalGrossProviderPremiumDue = $request->input('totalGrossProviderPremiumDue');
+
+        $insuredDiscountAmount = $request->input('insuredDiscountAmount');
+        $insuredNetAmount = $request->input('insuredNetAmount');
+        $totalRevenueCommission = $request->input('totalRevenueCommission');
+
+
+
+
+        foreach ($coverages as $coverage) {
+            Quotation::create([
+                'quotation_number' => $quotation_num,
+                'computation_rate_id' => $coverage['computationId'],
+                'insured_limit' => $coverage['limit'],
+                'insured_rate' => $coverage['rate'],
+                'insured_premium_due' => $coverage['insuredPremiumDue'],
+                'provider_premium_due' => $coverage['providerPremiumDue'],
+            ]);
+        }
+
+
+        InsuredQuotationDetails::create([
+            'quotation_number' => $quotation_num,
+            'insured_full_name' => $insuredFullName,
+            'insured_car_classification' => $insuredCarClassification,
+            'insured_unit_model' => $unitModel,
+            'insured_plate_no' => $plateNo,
+            'effectivity_type' => $effectivityType,
+
+
+            'insured_net_premium' => $insuredNetPremium,
+            'insured_dst_amount' => $insuredDstAmount,
+            'insured_vat_amount' => $insuredVatAmount,
+            'insured_rap_amount' => $insuredRapAmount,
+            'insured_lgt_amount' => $insuredLGTAmount,
+            'insured_gross_premium' => $insuredGrossPremium,
+
+            'provider_net_premium' => $totalProviderPremiumDue,
+            'provider_dst_amount' => $providerDST,
+            'provider_vat_amount' => $providerVAT,
+            'provider_lgt_amount' => $providerLGT,
+            'provider_rap_amount' => $providerRAP,
+            'provider_gross_premium_due' => $totalGrossProviderPremiumDue,
+
+            'insured_discount_amount' => $insuredDiscountAmount,
+            'insured_total_net_amount' => $insuredNetAmount,
+            'commision_revenue_total_amount' => $totalRevenueCommission,
+
+
+        ]);
+
+        return response()->json(['message' => 'quotations stored successfully']);
+    }
 
 }

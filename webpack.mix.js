@@ -2,7 +2,7 @@ const mix = require('laravel-mix');
 
 // Compile CSS
 mix.styles([
-    'public/assets/cdn-bootstraps-v5.3.2/bootstrap-css/bootstrap.min.css',
+    // 'public/assets/cdn-bootstraps-v5.3.2/bootstrap-css/bootstrap.min.css',
     'public/assets/cdn-datatable-1.11.5/jquery.dataTables.min.css',
     'public/assets/style.css',
     'public/assets/css/font-awesome-all-v5.15.4.min.css',

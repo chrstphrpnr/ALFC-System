@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alfc Insurance Agency Corporation.</title>
-    <!-- {{-- <link src="{{ asset('assets/bootstrap-v4.0.0.min.css') }}"> --}} -->
-    <link rel="stylesheet" href="{{ asset('assets/bootstrap-v4.0.0.min.css') }}">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/bootstrap-v4.0.0.min.css') }}">
+
 </head>
 <body>
 

@@ -1,24 +1,3 @@
-{{-- @extends('layouts.app')
-@section('content')
-
-<h1>Products for the Provider</h1>
-@if(count($products) > 0)
-    <ul>
-        @foreach($products as $product)
-            <li>
-                <a href="{{ route('insurance.computation_rates', ['providerId' => $providerId, 'productId' => $product->id]) }}">
-                    {{ $product->product_name }}
-                </a>
-            </li>
-        @endforeach
-    </ul>
-@else
-    <p>No products found for this provider.</p>
-@endif
-
-
-@endsection --}}
-
 
 @extends('layouts.app')
 
@@ -72,21 +51,20 @@
 
 
 
-<div class = "container-fluid d-md-block d-none">
+<div class="container-fluid d-md-block d-none">
     <div class="row justify-content-center">
         @foreach($products as $product)
-
-        <div class="col-lg-3 mb-5 d-flex justify-content-center">
-            <div class="card d-flex justify-content-center align-items-center">
-                <h5 class="card-title">{{ $product->product_name }}</h5>
+            <div class="col-md-3 col-lg-3 mb-5 d-flex justify-content-center">
+                <a href="{{ route('insurance.computation_rates', ['providerId' => $providerId, 'productId' => $product->id]) }}" style="text-decoration: none; color: inherit;">
+                    <div class="card d-flex justify-content-center align-items-center" >
+                        <h5 class="card-title">{{ $product->product_name }}</h5>
+                    </div>
+                </a>
             </div>
-        </div>
-
-
         @endforeach
-
     </div>
 </div>
+
 
 
 

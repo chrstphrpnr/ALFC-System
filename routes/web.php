@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InsuranceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,7 @@ Route::get('/Sales-Associate', function () {
 Route::get('/Sales-Associate/Marketing-Arms/', function () {
     return view('Users/Sales_Associate/ApplicationForms/marketing-arm');
 })->name('sales-associate.marketing-arms');
+
+
+
+Route::get('/providers', [InsuranceController::class, 'getProviders'])->name('insurance.providers.index');

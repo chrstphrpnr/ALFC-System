@@ -86,33 +86,65 @@
 
         <!-- Mobile Menu Items -->
         <div class="collapse navbar-collapse d-lg-none" id="navbarNavDropdown">
-        <a class="dropdown-item" href="#">
-            <img src="{{ asset('assets/images/nav profile.png') }}" alt="Profile Icon"> Marketing Arms
-        </a>
-        <a class="dropdown-item" href="#">
-            <img src="{{ asset('assets/images/nav dashboard.png') }}" alt="Dashboard Icon"> Insurances
-        </a>
-        <a class="dropdown-item" href="#">
-            <img src="{{ asset('assets/images/nav application.png') }}" alt="Application Icon"> Clients
-        </a>
-        <a class="dropdown-item" href="#">
-            <img src="{{ asset('assets/images/nav application.png') }}" alt="Dashboard Icon"> Dashboard
-        </a>    
-    </div>
+            <!-- Nested Dropdown for Marketing Arms -->
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-item" href="#" id="marketingArmsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ asset('assets/images/nav profile.png') }}" alt="Profile Icon"> Marketing Arms
+                </a>
+                <div class="dropdown-menu " aria-labelledby="marketingArmsDropdown">
+                    <!-- Dropdown items for Marketing Arms -->
+                    <a class="dropdown-item" href="#">Sub-item 1</a>
+                    <a class="dropdown-item" href="#">Sub-item 2</a>
+                    <a class="dropdown-item" href="#">Sub-item 2</a>
+                    <!-- Add more sub-items as needed -->
+                </div>
+            </div>
+
+            <!-- Other Main Menu Items -->
+            <a class="dropdown-item" href="#">
+                <img src="{{ asset('assets/images/nav dashboard.png') }}" alt="Dashboard Icon"> Insurances
+            </a>
+            <a class="dropdown-item" href="#">
+                <img src="{{ asset('assets/images/nav application.png') }}" alt="Application Icon"> Clients
+            </a>
+            <a class="dropdown-item" href="#">
+                <img src="{{ asset('assets/images/nav application.png') }}" alt="Dashboard Icon"> Dashboard
+            </a>
+        </div>
     <!------------------------ END MOBILE VIEW ------------------------>
 
 
     <!------------------------ WEB VIEW ------------------------------->
 
     <!-- Nav items for large screens -->
-    <div class="collapse navbar-collapse justify-content-center" >
-        <div class="navbar-nav d-none d-lg-flex">
-            <a href="#" class="nav-item nav-link">Marketing Arms</a>
-            <a href="#" class="nav-item nav-link">Insurances</a>
-            <a href="#" class="nav-item nav-link">Clients</a>
-            <a href="#" class="nav-item nav-link">Dashboard</a>
-        </div>
+    <div class="collapse navbar-collapse justify-content-center">
+        <ul class="navbar-nav d-none d-lg-flex">
+            <!-- Dropdown for Marketing Arms -->
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="marketingArmsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Marketing Arms
+                </a>
+                <div class="dropdown-menu" aria-labelledby="marketingArmsDropdown">
+                    <a href="#" class="dropdown-item">Option 1</a>
+                    <a href="#" class="dropdown-item">Option 2</a>
+                    <a href="#" class="dropdown-item">Option 3</a>
+                    <!-- Add more dropdown options here -->
+                </div>
+            </li>
+            
+            <!-- Other nav items -->
+            <li class="nav-item">
+                <a href="#" class="nav-link">Insurances</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Clients</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Dashboard</a>
+            </li>
+        </ul>
     </div>
+
 
     <!-- Notification icon for large screens and user dropdown -->
     <ul class="navbar-nav d-none d-lg-flex ml-auto">

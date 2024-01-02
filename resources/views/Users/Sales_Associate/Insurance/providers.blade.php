@@ -66,12 +66,17 @@
     <div class="row justify-content-center mt-4">
         @foreach ($providers as $provider)
             <div class="col-md-3 mb-4 d-flex justify-content-center">
-                <div class="card" title="{{ $provider->provider_name }}" style="background-image: url({{ asset('Uploads/InsuranceLogo/' . $provider->provider_logo) }});"></div>
+                <!-- Wrap the card with a link -->
+                <a href="{{ route('insurance.products', ['providerId' => $provider->id]) }}" title="{{ $provider->provider_name }}">
+                    <div class="card" style="background-image: url({{ asset('Uploads/InsuranceLogo/' . $provider->provider_logo) }});"></div>
+                </a>
             </div>
         @endforeach
     </div>
 </div>
 
+
+{{-- <a href="{{ route('insurance.products', ['providerId' => $provider->id]) }}">{{ $provider->provider_name }}</a><br> --}}
 
 
 @endsection

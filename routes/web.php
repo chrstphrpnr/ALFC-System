@@ -34,3 +34,4 @@ Route::get('/Sales-Associate/Marketing-Arms/', function () {
 
 
 Route::get('/providers', [InsuranceController::class, 'getProviders'])->name('insurance.providers.index');
+Route::get('/products/{providerId}', [InsuranceController::class, 'providersProduct'])->name('insurance.products');

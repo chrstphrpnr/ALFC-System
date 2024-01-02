@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InsuranceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,14 @@ Route::get('/login', function () {
 
 Route::get('/Sales-Associate', function () {
     return view('Users/Sales_Associate/Home/homepage');
-});
+})->name('sales-associate.home');
 
 Route::get('/Sales-Associate/Marketing-Arms/', function () {
     return view('Users/Sales_Associate/ApplicationForms/marketing-arm');
-});
+})->name('sales-associate.marketing-arms');
+
+
+
+Route::get('/providers', [InsuranceController::class, 'getProviders'])->name('insurance.providers.index');
+Route::get('/products/{providerId}', [InsuranceController::class, 'providersProduct'])->name('insurance.products');
+Route::get('/computation-rates/{providerId}/{productId}', [InsuranceController::class, 'getComputationRates'])->name('insurance.computation_rates');

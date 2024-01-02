@@ -1,63 +1,145 @@
 
 <link rel="stylesheet" href="{{ asset('assets/bootstrap-v4.0.0.min.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.0.1/remixicon.css">
+
+<style>
+    @media (min-width: 992px) { /* Adjust to the lg breakpoint */
+    #navbarNavDropdown {
+        display: none !important; /* Force hides the menu on larger screens */
+    }
+    }
+
+    /* Custom styles for the dropdown menu */
+    .nav-item .dropdown-menu-right {
+        right: 0; /* Align the right edge of the dropdown menu with the right edge of its parent */
+        left: auto; /* Ensure that the left property does not interfere */
+    }
+
+    /* Optional: Add additional styling for the dropdown items */
+    .nav-item .dropdown-menu a.dropdown-item {
+        white-space: nowrap; /* Prevents text from wrapping */
+        padding: 10px 20px; /* Adjust padding as needed */
+    }
+
+    /* Optional: Style adjustments for the dropdown toggle */
+    .nav-item .dropdown-toggle::after {
+        margin-left: 0.5em; /* Adjust space between text and dropdown arrow */
+    }
+
+    /* Custom styles for the dropdown menu */
+    .dropdown-menu {
+        right: 50px; /* Align the right edge of the dropdown menu with the right edge of its parent */
+        left: auto; /* Ensure that the left property does not interfere */
+    }
+
+    /* Optional: Add additional styling for the dropdown items */
+    .dropdown-menu a.dropdown-item {
+        white-space: nowrap; /* Prevents text from wrapping */
+        padding: 10px 20px; /* Adjust padding as needed */
+    }
+
+    /* Optional: Style adjustments for the dropdown toggle */
+    .nav-link.dropdown-toggle::after {
+        margin-left: 0.5em; /* Adjust space between text and dropdown arrow */
+    }
+
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
     <a class="navbar-brand" href="#">
-        <img src="{{ asset('assets/ALFC Logo nav.png') }}" alt="Your Image Alt Text">
+        <img src="{{ asset('assets/images/ALFC Logo nav.png') }}" alt="ALFC Logo">
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <!------------------------ MOBILE VIEW ------------------------>
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <!-- Show dropdown items on smaller screens -->
+    <!-- Group the toggler and notification bell together -->
+    <div class="d-flex order-lg-1 ml-auto">
+ 
+        <!-- Notification bell (hidden on larger screens) -->
+        <a class="nav-link d-lg-none dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ri-notification-line"></i>
+            </a>
 
-                <div class="dropdown-menu d-block d-lg-none">
-                <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav profile.png') }}" alt="Icon" >
-                         Profile
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav dashboard.png') }}" alt="Icon" >
-                        Dashboard
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav application.png') }}" alt="Icon" >
-                        Application Forms
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav logout.png') }}" alt="Icon" >
-                        Logout
-                    </a>
-                </div>
+            <div class="dropdown-menu " aria-labelledby="notificationDropdown">
+                <a class="dropdown-item" href="#">Notification 1</a>
+                <a class="dropdown-item" href="#">Notification 2</a>
+                <a class="dropdown-item" href="#">Notification 3</a>
+                <!-- Add more dropdown items here -->
+            </div>
+        
+        <!-- User dropdown (hidden on larger screens) -->
+        <div class="nav-item dropdown d-lg-none">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ri-user-line"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Logout</a>
+            </div>
+        </div>
 
-            <!-- Show image and dropdown toggle on larger screens -->
-            <li class="nav-item dropdown d-none d-lg-block">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset('assets/menu.png') }}" alt="Your Image Alt Text">
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav profile.png') }}" alt="Icon" >
-                         Profile
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav dashboard.png') }}" alt="Icon" >
-                        Dashboard
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav application.png') }}" alt="Icon" >
-                        Application Forms
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <img src="{{ asset('assets/nav logout.png') }}" alt="Icon" >
-                        Logout
-                    </a>
-                </div>
-            </li>
-        </ul>
+        <!-- Hamburger toggle button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
-    <!-- Show dropdown content on smaller screens -->
+
+        <!-- Mobile Menu Items -->
+        <div class="collapse navbar-collapse d-lg-none" id="navbarNavDropdown">
+        <a class="dropdown-item" href="#">
+            <img src="{{ asset('assets/images/nav profile.png') }}" alt="Profile Icon"> Marketing Arms
+        </a>
+        <a class="dropdown-item" href="#">
+            <img src="{{ asset('assets/images/nav dashboard.png') }}" alt="Dashboard Icon"> Insurances
+        </a>
+        <a class="dropdown-item" href="#">
+            <img src="{{ asset('assets/images/nav application.png') }}" alt="Application Icon"> Clients
+        </a>
+        <a class="dropdown-item" href="#">
+            <img src="{{ asset('assets/images/nav application.png') }}" alt="Dashboard Icon"> Dashboard
+        </a>    
+    </div>
+    <!------------------------ END MOBILE VIEW ------------------------>
+
+
+    <!------------------------ WEB VIEW ------------------------------->
+
+    <!-- Nav items for large screens -->
+    <div class="collapse navbar-collapse justify-content-center" >
+        <div class="navbar-nav d-none d-lg-flex">
+            <a href="#" class="nav-item nav-link">Marketing Arms</a>
+            <a href="#" class="nav-item nav-link">Insurances</a>
+            <a href="#" class="nav-item nav-link">Clients</a>
+            <a href="#" class="nav-item nav-link">Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Notification icon for large screens and user dropdown -->
+    <ul class="navbar-nav d-none d-lg-flex ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ri-notification-line"></i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="notificationDropdown">
+                <a class="dropdown-item" href="#">Notification 1</a>
+                <a class="dropdown-item" href="#">Notification 2</a>
+                <a class="dropdown-item" href="#">Notification 3</a>
+                <!-- Add more dropdown items here -->
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ri-user-line"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Logout</a>
+            </div>
+        </li>
+    </ul>
+    <!------------------------ END WEB VIEW ---------------------------->
+
+
 
 </nav>
+

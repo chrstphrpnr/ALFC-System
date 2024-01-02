@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\InsuranceProvider;
 use App\Models\InsuranceProduct;
 use App\Models\InsuranceCoverage;
+use App\Models\InsuranceComputation;
 
 use DB;
 
@@ -45,9 +46,37 @@ class InsuranceController extends Controller
     }
 
     public function getComputationRates($providerId, $productId) {
+        $providerProduct = DB::table('provider_products')
+            ->where('insurance_provider_id', $providerId)
+            ->where('insurance_product_id', $productId)
+            ->first();
 
+        if ($providerProduct) {
 
+            $computationRates = InsuranceComputation::select(
+                'insurance_computations.*',
+                'insurance_coverages.coverage_name as coverageName', // Select coverage_name field
+                'insurance_computations.set_limit_minimum as setLimitMinimum',
+                'insurance_computations.set_limit_maximum as setLimitMaximum',
+                'insurance_computations.set_rate_minimum as setRateMinimum',
+                'insurance_computations.set_rate_maximum as setRateMaximum',
+                'insurance_computations.provider_net_rate as providerNetRate',
 
+            )
+            ->where('provider_product_id', $providerProduct->id)
+            ->join('insurance_coverages', 'insurance_coverages.id', '=', 'insurance_computations.insurance_coverage_id')
+            ->get();
+
+            $groupedRates = $computationRates->groupBy('coverageName');
+
+            // DD($groupedRates);
+
+            // Pass $computationRates data to the view
+            return view('Users/Sales_Associate/Insurance/form_quotation', compact('computationRates','groupedRates'));
+        } else {
+            // Handle case when no computation rates are found for the selected category and provider
+            return redirect()->route('insurance.products', ['providerId' => $providerId])->with('error', 'No computation rates found for this category and provider.');
+        }
     }
 
 

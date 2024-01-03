@@ -425,21 +425,21 @@
 
                                                 <div class="col-6 col-sm-3 col-md-3 d-flex flex-column align-items-center">
                                                     <label class="input-label label">Titles</label>
-                                                    <select id="title" class="form-control custom-input" style="text-align: left; font-size: 13px;" >
+                                                    {{-- <select id="title" class="form-control custom-input" style="text-align: left; font-size: 13px;" >
                                                         <option disabled="disabled" selected="selected"></option>
                                                         <option value="BM">BM</option>
                                                         <option value="GM">GM</option>
-                                                    </select>
+                                                    </select> --}}
                                                 </div>
 
                                                 <div class="col-6 col-sm-3 col-md-5 d-flex flex-column align-items-center">
                                                     <label class="input-label label">Deductions</label>
-                                                    <input type="text" class="form-control custom-input" >
+                                                    {{-- <input type="text" class="form-control custom-input" > --}}
                                                 </div>
 
                                                 <div class="col-6 col-sm-3 col-md-4 d-flex flex-column align-items-center">
                                                     <label class="input-label label">Amount</label>
-                                                    <input type="text" class="form-control custom-input" >
+                                                    {{-- <input type="text" class="form-control custom-input" > --}}
                                                 </div>
 
                                             </div>
@@ -581,9 +581,15 @@
                 let aogLimitInput = document.querySelector('input[data-coverage="AOG"]');
                 let aogRateInput = document.querySelector('input[data-coverage="AOG"][name="rate"]');
                 let aogPremiumDue = document.querySelector('input[data-coverage="AOG"][name="premium_due"]');
+                let biRateInput = document.querySelector('input[data-coverage="BODILY INJURY"][name="rate"]');
+                let pdRateInput = document.querySelector('input[data-coverage="PROPERTY DAMAGE"][name="rate"]');
 
-
-
+                if (biRateInput){
+                    biRateInput.disabled = true;
+                }
+                if (pdRateInput){
+                    pdRateInput.disabled = true;
+                }
 
                 if (ownDamageTheftLimitInput && aogLimitInput) {
                     ownDamageTheftLimitInput.addEventListener('input', function(event) {
@@ -775,19 +781,22 @@
                 let addButton = document.getElementById('addFieldBtn');
                 addButton.parentNode.insertBefore(newFieldsContainer, addButton.parentNode.firstChild);
                 newFieldsContainer.dataset.fieldGroupId = fieldGroupId;
+
                 let fieldGroup = {
-                    id: fieldGroupId,
+
                     field1: '',
                     field2: '',
                     field3: ''
                 };
-                            // Extract and store the values from the dynamic fields
+
+                // Extract and store the values from the dynamic fields
                 newField1.querySelector('select').addEventListener('input', (e) => fieldGroup.field1 = e.target.value);
                 newField2.querySelector('input').addEventListener('input', (e) => fieldGroup.field2 = e.target.value);
                 newField3.querySelector('input').addEventListener('input', (e) => fieldGroup.field3 = e.target.value);
 
                 addedFieldContainers.push(newFieldsContainer);
                 dynamicFieldValues.push(fieldGroup);
+
                 fieldGroupId++;
                 updateDeleteButton();
                 calculateTotalExpenses(); // Calculate total expenses when a field is added
@@ -935,13 +944,6 @@
                 });
             }
 
-            function getInitialFieldValues() {
-                return {
-                    field1: document.getElementById('title').value,
-                    field2: document.querySelector('#initialInputs div:nth-child(2) input').value,
-                    field3: document.querySelector('#initialInputs div:nth-child(3) input').value
-                };
-            }
 
 
 
@@ -1722,8 +1724,7 @@
                     }
 
                 });
-                        const initialFieldValues = getInitialFieldValues();
-                        console.log('Initial Field Values:', initialFieldValues);
+
                         console.log('Dynamic Field Values:', dynamicFieldValues);
 
 //                         console.log('Total Expenses:', DeductionsTotalExpenses);
@@ -1761,7 +1762,8 @@
                     insuredDiscountAmount: insuredDiscountAmount,
                     insuredNetAmount: insuredNetAmount,
                     totalRevenueCommission: totalRevenueCommission,
-
+                    dynamicFieldValues: dynamicFieldValues,
+                    // initialFieldValues: initialFieldValues,
 
 
                 };

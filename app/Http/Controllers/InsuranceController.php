@@ -9,6 +9,7 @@ use App\Models\InsuranceCoverage;
 use App\Models\InsuranceComputation;
 use App\Models\Quotation;
 use App\Models\InsuredQuotationDetails;
+use App\Models\CommisionRevenue;
 
 use DB;
 
@@ -116,6 +117,7 @@ class InsuranceController extends Controller
         $insuredDiscountAmount = $request->input('insuredDiscountAmount');
         $insuredNetAmount = $request->input('insuredNetAmount');
         $totalRevenueCommission = $request->input('totalRevenueCommission');
+        $dynamicFields = $request->input('dynamicFieldValues');
 
 
 
@@ -130,6 +132,21 @@ class InsuranceController extends Controller
                 'provider_premium_due' => $coverage['providerPremiumDue'],
             ]);
         }
+
+
+
+        foreach ($dynamicFields as $fieldGroup) {
+            // You can add additional validation here if needed
+            CommisionRevenue::create([ // Replace DynamicFieldModel with your actual model
+                'quotation_number' => $quotation_num,
+                'titles' => $fieldGroup['field1'],
+                'deduction_name' => $fieldGroup['field2'],
+                'deduction_amount' => $fieldGroup['field3'],
+                // Add any other relevant fields
+            ]);
+        }
+
+
 
 
         InsuredQuotationDetails::create([

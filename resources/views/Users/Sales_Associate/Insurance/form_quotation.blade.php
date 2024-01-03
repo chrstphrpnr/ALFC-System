@@ -1552,8 +1552,7 @@
                     console.error("Invalid total revenue commission value!");
                     return; // Exit function if the total revenue commission value is not a number
                 }
-
-                let vat = (totalExpenses - totalRevenueCommission) * 0.12 / 1.12;
+                let vat = Math.abs((totalRevenueCommission - totalExpenses) * 0.12 / 1.12);
                 if (isNaN(vat)) {
                     console.error("VAT calculation resulted in NaN!");
                     return; // Exit function if the VAT calculation results in NaN
@@ -1569,9 +1568,10 @@
                     console.error("Invalid input values for sales credit calculation!");
                     return; // Exit function if any input value is not a number
                 }
-                let salesCredit = totalRevenueCommission - totalExpenses - vat;
-                
-                let salesCreditPercentage = (salesCredit /totalRevenueCommission ) * 100;
+                let result = Math.abs(totalRevenueCommission - totalExpenses);
+                let salesCredit = result - vat;
+                let salesCreditComputation = totalRevenueCommission - (totalExpenses- vat);
+                let salesCreditPercentage = (salesCreditComputation /totalRevenueCommission ) * 100;
                 console.log('Sales Credit:', salesCredit);
                 document.getElementById('sales_credit').value = salesCredit.toFixed(2);
 

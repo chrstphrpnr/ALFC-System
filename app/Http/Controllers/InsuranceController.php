@@ -10,6 +10,7 @@ use App\Models\InsuranceComputation;
 use App\Models\Quotation;
 use App\Models\InsuredQuotationDetails;
 use App\Models\CommisionRevenue;
+use App\Models\CommisionRevenueDetails;
 
 use DB;
 
@@ -91,6 +92,7 @@ class InsuranceController extends Controller
 
     public function storeQuotation(Request $request)
     {
+
         $quotation_num = rand();
 
         $coverages = $request->input('coverages');
@@ -117,8 +119,14 @@ class InsuranceController extends Controller
         $insuredDiscountAmount = $request->input('insuredDiscountAmount');
         $insuredNetAmount = $request->input('insuredNetAmount');
         $totalRevenueCommission = $request->input('totalRevenueCommission');
+
         $dynamicFields = $request->input('dynamicFieldValues');
 
+        $deductionsTotalExpenses = $request->input('deductionsTotalExpenses');
+        $deductionsVat = $request->input('deductionsVat');
+        $deductionsSalesCredit = $request->input('deductionsSalesCredit');
+        $deductionsScPercentage = $request->input('deductionsScPercentage');
+        $marketingFundAmount = $request->input('marketingFundAmount');
 
 
 
@@ -132,21 +140,6 @@ class InsuranceController extends Controller
                 'provider_premium_due' => $coverage['providerPremiumDue'],
             ]);
         }
-
-
-
-        foreach ($dynamicFields as $fieldGroup) {
-            // You can add additional validation here if needed
-            CommisionRevenue::create([ // Replace DynamicFieldModel with your actual model
-                'quotation_number' => $quotation_num,
-                'titles' => $fieldGroup['field1'],
-                'deduction_name' => $fieldGroup['field2'],
-                'deduction_amount' => $fieldGroup['field3'],
-                // Add any other relevant fields
-            ]);
-        }
-
-
 
 
         InsuredQuotationDetails::create([
@@ -176,8 +169,28 @@ class InsuranceController extends Controller
             'insured_total_net_amount' => $insuredNetAmount,
             'commision_revenue_total_amount' => $totalRevenueCommission,
 
-
         ]);
+
+
+        foreach ($dynamicFields as $fieldGroup) {
+            CommisionRevenue::create([ // Replace DynamicFieldModel with your actual model
+                'quotation_number' => $quotation_num,
+                'titles' => $fieldGroup['field1'],
+                'deduction_name' => $fieldGroup['field2'],
+                'deduction_amount' => $fieldGroup['field3'],
+            ]);
+        }
+
+
+        CommisionRevenueDetails::create([
+            'quotation_number' => $quotation_num,
+            'total_expenses_amount' => $deductionsTotalExpenses,
+            'marketing_fund_amount' => $marketingFundAmount,
+            'commission_revenue_vat_amount' => $deductionsVat,
+            'sales_credit_amount' => $deductionsSalesCredit,
+            'sales_credit_percentage' => $deductionsScPercentage,
+        ]);
+
 
         return response()->json(['message' => 'quotations stored successfully']);
     }

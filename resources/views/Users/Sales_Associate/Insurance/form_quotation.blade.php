@@ -761,6 +761,7 @@
                 newField1.innerHTML = `
                     <select class="form-control custom-input" style="text-align: left; font-size: 13px;">
                         <option disabled="disabled" selected="selected"></option>
+                        <option value="AM">AM</option>
                         <option value="BM">BM</option>
                         <option value="GM">GM</option>
                     </select>
@@ -1552,7 +1553,7 @@
                     return; // Exit function if the total revenue commission value is not a number
                 }
 
-                let vat = (totalRevenueCommission - totalExpenses) * 0.12 / 1.12;
+                let vat = (totalExpenses - totalRevenueCommission) * 0.12 / 1.12;
                 if (isNaN(vat)) {
                     console.error("VAT calculation resulted in NaN!");
                     return; // Exit function if the VAT calculation results in NaN
@@ -1569,6 +1570,7 @@
                     return; // Exit function if any input value is not a number
                 }
                 let salesCredit = totalRevenueCommission - totalExpenses - vat;
+                
                 let salesCreditPercentage = (salesCredit /totalRevenueCommission ) * 100;
                 console.log('Sales Credit:', salesCredit);
                 document.getElementById('sales_credit').value = salesCredit.toFixed(2);
@@ -1606,10 +1608,12 @@
                 let insuredVatAmount = parseFloat(document.getElementById('vat').value.replace(/[^\d.]/g, '')) || 0;
                 let insuredRapAmount = parseFloat(document.getElementById('rap').value.replace(/[^\d.]/g, '')) || 0;
                 let marketingFundAmount = parseFloat(document.getElementById('marketing_fund').value.replace(/[^\d.]/g, '')) || 0;
-                let DeductionsTotalExpenses = parseFloat(document.getElementById('total_expenses').value.replace(/[^\d.]/g, '')) || 0;
-                let DeductionsVat= parseFloat(document.getElementById('computation_vat').value.replace(/[^\d.]/g, '')) || 0;
-                let DeductionsSalesCredit = parseFloat(document.getElementById('sales_credit').value.replace(/[^\d.]/g, '')) || 0;
-                let DeductionsScPercentage = parseFloat(document.getElementById('sales_credit_percent').value);
+                let deductionsTotalExpenses = parseFloat(document.getElementById('total_expenses').value.replace(/[^\d.]/g, '')) || 0;
+                let deductionsVat= parseFloat(document.getElementById('computation_vat').value.replace(/[^\d.]/g, '')) || 0;
+                let deductionsSalesCredit = parseFloat(document.getElementById('sales_credit').value.replace(/[^\d.]/g, '')) || 0;
+                // let deductionsScPercentage = parseFloat(document.getElementById('sales_credit_percent').value);
+                let deductionsScPercentage = parseFloat(document.getElementById('sales_credit_percent').value) / 100;
+
 
                 const totalInsuredPremiumDue = parseFloat(document.getElementById('net_premium').value.replace(/[^\d.]/g, '')) || 0;
                 const selectLGT = document.getElementById('lgtSelect').value;
@@ -1725,14 +1729,14 @@
 
                 });
 
-                        console.log('Dynamic Field Values:', dynamicFieldValues);
+                        // console.log('Dynamic Field Values:', dynamicFieldValues);
 
-//                         console.log('Total Expenses:', DeductionsTotalExpenses);
-//                         console.log('Vat:', DeductionsVat);
-//                         console.log('Sales Credit:', DeductionsSalesCredit);
-//                         console.log('Percentage:', DeductionsScPercentage);
-//                         console.log('Marketing Fund:', marketingFundAmount);
-//
+                        // console.log('Total Expenses:', deductionsTotalExpenses);
+                        // console.log('Vat:', deductionsVat);
+                        // console.log('Sales Credit:', deductionsSalesCredit);
+                        // console.log('Percentage:', deductionsScPercentage);
+                        // console.log('Marketing Fund:', marketingFundAmount);
+
 
 
 
@@ -1762,8 +1766,15 @@
                     insuredDiscountAmount: insuredDiscountAmount,
                     insuredNetAmount: insuredNetAmount,
                     totalRevenueCommission: totalRevenueCommission,
+
+
                     dynamicFieldValues: dynamicFieldValues,
-                    // initialFieldValues: initialFieldValues,
+
+                    deductionsTotalExpenses: deductionsTotalExpenses,
+                    deductionsVat: deductionsVat,
+                    deductionsSalesCredit: deductionsSalesCredit,
+                    deductionsScPercentage: deductionsScPercentage,
+                    marketingFundAmount: marketingFundAmount,
 
 
                 };

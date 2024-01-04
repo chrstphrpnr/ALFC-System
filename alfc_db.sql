@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2024 at 02:36 AM
+-- Generation Time: Jan 04, 2024 at 04:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -36,6 +36,62 @@ CREATE TABLE `commision_revenues` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `commision_revenues`
+--
+
+INSERT INTO `commision_revenues` (`id`, `quotation_number`, `titles`, `deduction_name`, `deduction_amount`, `created_at`, `updated_at`) VALUES
+(15, 1676890923, 'BM', 'Jenelyn', 10010.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(16, 1676890923, 'GM', 'Tandang Sora', 1000.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(17, 1676890923, 'AM', 'Tandang Sora', 500.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(18, 1676890923, NULL, 'Marketing Fund', 300.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(19, 1676890923, NULL, 'Add On', 123.300000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `commision_revenue_details`
+--
+
+CREATE TABLE `commision_revenue_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `quotation_number` bigint(20) UNSIGNED NOT NULL,
+  `marketing_fund_amount` decimal(20,9) NOT NULL,
+  `total_expenses_amount` decimal(20,9) NOT NULL,
+  `commission_revenue_vat_amount` decimal(20,9) NOT NULL,
+  `sales_credit_amount` decimal(20,9) NOT NULL,
+  `sales_credit_percentage` decimal(20,9) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `commision_revenue_details`
+--
+
+INSERT INTO `commision_revenue_details` (`id`, `quotation_number`, `marketing_fund_amount`, `total_expenses_amount`, `commission_revenue_vat_amount`, `sales_credit_amount`, `sales_credit_percentage`, `created_at`, `updated_at`) VALUES
+(2, 1676890923, 0.000000000, 11933.300000000, 898.480000000, 7487.340000000, -2.110600000, '2024-01-04 01:51:41', '2024-01-04 01:51:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dsts`
+--
+
+CREATE TABLE `dsts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `dst_percentage` decimal(20,9) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dsts`
+--
+
+INSERT INTO `dsts` (`id`, `dst_percentage`, `created_at`, `updated_at`) VALUES
+(1, 0.125000000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -201,6 +257,37 @@ CREATE TABLE `insured_quotation_details` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `insured_quotation_details`
+--
+
+INSERT INTO `insured_quotation_details` (`id`, `quotation_number`, `insured_full_name`, `insured_car_classification`, `insured_unit_model`, `insured_plate_no`, `effectivity_type`, `effectivity_date_start`, `effectivity_date_end`, `insured_net_premium`, `insured_dst_amount`, `insured_vat_amount`, `insured_rap_amount`, `insured_lgt_amount`, `insured_gross_premium`, `provider_net_premium`, `provider_dst_amount`, `provider_vat_amount`, `provider_rap_amount`, `provider_lgt_amount`, `provider_gross_premium_due`, `insured_discount_amount`, `insured_total_net_amount`, `commision_revenue_total_amount`, `created_at`, `updated_at`) VALUES
+(9, 1676890923, 'Christopher Panerio', 'Private Car', 'Test', 'Test', '1 Year', NULL, NULL, 8415.000000000, 1051.880000000, 1009.800000000, 0.000000000, 16.830000000, 10493.510000000, 5490.000000000, 686.250000000, 658.800000000, 0.000000000, 10.980000000, 6846.030000000, 100.000000000, 10393.510000000, 3547.480000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lgts`
+--
+
+CREATE TABLE `lgts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `lgt_percentage` decimal(20,9) NOT NULL,
+  `lgt_location` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `lgts`
+--
+
+INSERT INTO `lgts` (`id`, `lgt_percentage`, `lgt_location`, `created_at`, `updated_at`) VALUES
+(1, 0.002000000, 'NCR', NULL, NULL),
+(2, 0.005000000, 'Luzon', NULL, NULL),
+(3, 0.007500000, 'Visayas', NULL, NULL),
+(4, 0.008250000, 'Mindanao', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -230,7 +317,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (23, '2024_01_02_132918_create_insurance_computations_table', 2),
 (29, '2024_01_02_145708_create_quotations_table', 3),
 (30, '2024_01_02_154827_create_insured_quotation_details_table', 4),
-(31, '2024_01_02_171907_create_commision_revenues_table', 5);
+(31, '2024_01_02_171907_create_commision_revenues_table', 5),
+(33, '2024_01_03_131230_create_commision_revenue_details_table', 6),
+(34, '2024_01_03_134901_create_vats_table', 7),
+(35, '2024_01_03_135040_create_dsts_table', 7),
+(36, '2024_01_03_135214_create_lgts_table', 7);
 
 -- --------------------------------------------------------
 
@@ -322,6 +413,22 @@ CREATE TABLE `quotations` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `quotations`
+--
+
+INSERT INTO `quotations` (`id`, `quotation_number`, `computation_rate_id`, `insured_limit`, `insured_rate`, `insured_premium_due`, `provider_premium_due`, `created_at`, `updated_at`) VALUES
+(146, 1676890923, 12, 450000.000000000, 0.010000000, 4500.000000000, 3600.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(147, 1676890923, 16, 200000.000000000, 0.002100000, 420.000000000, 420.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(148, 1676890923, 20, 200000.000000000, 0.006225000, 1245.000000000, 1245.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(149, 1676890923, 21, 50000.000000000, 5.000000000, 250000.000000000, 0.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(150, 1676890923, 22, 450000.000000000, 0.005000000, 2250.000000000, 225.000000000, '2024-01-04 01:51:41', '2024-01-04 01:51:41'),
+(151, 183100409, 12, 450000.000000000, 0.010000000, 4500.000000000, 3600.000000000, '2024-01-04 02:53:06', '2024-01-04 02:53:06'),
+(152, 183100409, 16, 200000.000000000, 0.002100000, 420.000000000, 420.000000000, '2024-01-04 02:53:06', '2024-01-04 02:53:06'),
+(153, 183100409, 20, 200000.000000000, 0.006225000, 1245.000000000, 1245.000000000, '2024-01-04 02:53:06', '2024-01-04 02:53:06'),
+(154, 183100409, 21, 50000.000000000, 5.000000000, 250000.000000000, 0.000000000, '2024-01-04 02:53:06', '2024-01-04 02:53:06'),
+(155, 183100409, 22, 450000.000000000, 0.005000000, 2250.000000000, 225.000000000, '2024-01-04 02:53:06', '2024-01-04 02:53:06');
+
 -- --------------------------------------------------------
 
 --
@@ -339,6 +446,27 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vats`
+--
+
+CREATE TABLE `vats` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `vat_percentage` decimal(20,9) NOT NULL,
+  `excluded_percentage` decimal(20,9) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vats`
+--
+
+INSERT INTO `vats` (`id`, `vat_percentage`, `excluded_percentage`, `created_at`, `updated_at`) VALUES
+(1, 0.120000000, 1.120000000, NULL, NULL);
+
 --
 -- Indexes for dumped tables
 --
@@ -349,6 +477,19 @@ CREATE TABLE `users` (
 ALTER TABLE `commision_revenues`
   ADD PRIMARY KEY (`id`),
   ADD KEY `commision_revenues_quotation_number_foreign` (`quotation_number`);
+
+--
+-- Indexes for table `commision_revenue_details`
+--
+ALTER TABLE `commision_revenue_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `commision_revenue_details_quotation_number_foreign` (`quotation_number`);
+
+--
+-- Indexes for table `dsts`
+--
+ALTER TABLE `dsts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -389,6 +530,12 @@ ALTER TABLE `insurance_providers`
 ALTER TABLE `insured_quotation_details`
   ADD PRIMARY KEY (`id`),
   ADD KEY `insured_quotation_details_quotation_number_foreign` (`quotation_number`);
+
+--
+-- Indexes for table `lgts`
+--
+ALTER TABLE `lgts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -441,6 +588,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `vats`
+--
+ALTER TABLE `vats`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -448,7 +601,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `commision_revenues`
 --
 ALTER TABLE `commision_revenues`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `commision_revenue_details`
+--
+ALTER TABLE `commision_revenue_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `dsts`
+--
+ALTER TABLE `dsts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -484,13 +649,19 @@ ALTER TABLE `insurance_providers`
 -- AUTO_INCREMENT for table `insured_quotation_details`
 --
 ALTER TABLE `insured_quotation_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `lgts`
+--
+ALTER TABLE `lgts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -514,13 +685,19 @@ ALTER TABLE `provider_product_extensions`
 -- AUTO_INCREMENT for table `quotations`
 --
 ALTER TABLE `quotations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `vats`
+--
+ALTER TABLE `vats`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -531,6 +708,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `commision_revenues`
   ADD CONSTRAINT `commision_revenues_quotation_number_foreign` FOREIGN KEY (`quotation_number`) REFERENCES `quotations` (`quotation_number`);
+
+--
+-- Constraints for table `commision_revenue_details`
+--
+ALTER TABLE `commision_revenue_details`
+  ADD CONSTRAINT `commision_revenue_details_quotation_number_foreign` FOREIGN KEY (`quotation_number`) REFERENCES `quotations` (`quotation_number`);
 
 --
 -- Constraints for table `insurance_computations`

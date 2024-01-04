@@ -161,9 +161,8 @@
                                     <div class="col-md-9 mb-3">
                                         <label class="input-label label">Insured’s Full Name</label>
                                         <input type="text" id="insured_full_name" name="insured_full_name" class="form-control custom-input" style="text-align: left;" >
-                                        {{-- @error('insured_full_name')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror --}}
+                                        <span class="error-message" style="color: red; display: none;"></span>
+
                                     </div>
 
                                     <div class="col-sm-3 col-md-3  mb-3 ">
@@ -174,6 +173,8 @@
                                             <option value="1 Year">1 Year</option>
                                             <option value="2 Year">2 Year</option>
                                         </select>
+                                        <span class="error-message" style="color: red; display: none;"></span>
+
                                     </div>
 
                                 </div>
@@ -187,30 +188,29 @@
                                             <option value="Private Car">Private Car</option>
                                             <option value="Public Car">Public Car</option>
                                         </select>
+                                        <span class="error-message" style="color: red; display: none;"></span>
+
                                     </div>
 
                                     <div class="col-md-3 mb-3">
                                         <label class="input-label label">Car Category</label>
                                         <input type="text" id="car_category" name="car_category" class="form-control custom-input" style="text-align: left;">
-                                        @error('car_category')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
+                                        <span class="error-message" style="color: red; display: none;"></span>
+
                                     </div>
 
                                     <div class="col-md-3 mb-3">
                                         <label class="input-label label">Unit Model</label>
                                         <input type="text" id="unit_model" name="unit_model" class="form-control custom-input" style="text-align: left;">
-                                        @error('unit_model')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
+                                        <span class="error-message" style="color: red; display: none;"></span>
+
                                     </div>
 
                                     <div class="col-md-3 mb-3">
                                         <label class="input-label label">Plate No.</label>
                                         <input type="text" id="plate_no" name="plate_no" class="form-control custom-input" style="text-align: left;">
-                                        @error('plate_no')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
+                                        <span class="error-message" style="color: red; display: none;"></span>
+
                                     </div>
 
                                 </div>
@@ -677,6 +677,38 @@
             let grossPremiumInput = document.getElementById('gross_premium');
             let grossPremiumErrorDiv = document.getElementById('gross-premium-error'); // Ensure you have this div in your HTML
             let isValid = true;
+            
+            function validateField(fieldId, errorMessage) {
+                const field = document.getElementById(fieldId);
+                const errorSpan = field.nextElementSibling; // The error message span
+
+                let isInvalid = false;
+
+                // Check if the field is a dropdown and the placeholder option is selected
+                if (field.tagName === 'SELECT' && field.selectedIndex === 0) {
+                    isInvalid = true;
+                }
+                // Check if the field is a text input and is empty
+                else if (field.tagName === 'INPUT' && !field.value.trim()) {
+                    isInvalid = true;
+                }
+
+                if (isInvalid) {
+                    errorSpan.textContent = errorMessage;
+                    errorSpan.style.display = 'block';
+                    isValid = false;
+                } else {
+                    errorSpan.style.display = 'none';
+                }
+            }
+
+            // Validate each field
+            validateField('insured_full_name', 'Insured’s Full Name is required.');
+            validateField('effectivity_type', 'Effectivity Date is required.');
+            validateField('car_classification', 'Car Classification is required.');
+            validateField('car_category', 'Car Category is required.');
+            validateField('unit_model', 'Unit Model is required.');
+            validateField('plate_no', 'Plate No. is required.');
 
             // Validate GROSS PREMIUM
             if (!grossPremiumInput.value.trim()) {

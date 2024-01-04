@@ -326,11 +326,17 @@
                                     <div class="col-sm-3 col-md-3 mb-3 d-flex flex-column align-items-center">
                                         <label class="input-label label">LGT </label>
                                         <select id="lgtSelect" class="form-control custom-input" style="text-align: left; font-size: 13px;" onchange="replaceWithInput()">
-                                            <option disabled="disabled" selected="selected">Select LGT percentage</option>
+                                            {{-- <option disabled="disabled" selected="selected">Select LGT percentage</option>
                                             <option value="0.002">NCR - 0.20%</option>
                                             <option value="0.005">Luzon - 0.50%</option>
                                             <option value="0.0075">Visayas - 0.75%</option>
-                                            <option value="0.00825">Mindanao - 0.825%</option>
+                                            <option value="0.00825">Mindanao - 0.825%</option> --}}
+                                            <option disabled="disabled" selected="selected">Select LGT percentage</option>
+                                            @foreach ($lgts as $lgt)
+                                                <option value="{{ $lgt->lgt_percentage }}">{{ $lgt->lgt_location }} - {{ number_format($lgt->lgt_percentage * 100, 2) }}%</option>
+                                            @endforeach
+
+
                                         </select>
                                         <input type="text" id="lgtInput" name="lgt" class="form-control custom-input" style="display: none;" onclick="resetLGTSelect()">
                                     </div>
@@ -750,6 +756,19 @@
             //dynamic storing of value in dynamic field
             let dynamicFieldValues = [];
             let fieldGroupId = 0;
+
+
+            // let dstValue = {!! json_encode($dsts) !!};
+
+            let dstPercentage = @json($dsts->first()->dst_percentage);
+
+            let vatPercentage = @json($vats->first()->vat_percentage);
+            let vatExcludedPercentage = @json($vats->first()->excluded_percentage);
+
+
+            // console.log(dstValue);
+
+
             document.getElementById('addFieldBtn').addEventListener('click', function () {
                 event.preventDefault();
 
@@ -832,7 +851,6 @@
             });
 
 
-
             function updateDeleteButton() {
                 let deleteButton = document.getElementById('deleteFieldBtn');
                 deleteButton.disabled = addedFieldContainers.length === 0;
@@ -899,14 +917,6 @@
             limitInputTo500();
 
 
-            //end
-
-
-
-
-            // You can call this function whenever you need to check and toggle the sales_credit input
-
-
             function calculateTotalExpenses() {
                 let inputs = document.querySelectorAll('#dynamicFieldsContainer input[type="text"]');
                 let totalExpenses = 0;
@@ -944,10 +954,6 @@
                     });
                 });
             }
-
-
-
-
 
             function formatLimit() {
 
@@ -1079,6 +1085,7 @@
                 }
 
             }
+
             let isRateValid = true;
             function validateRate(decimalRateValue) {
 
@@ -1348,7 +1355,7 @@
                         let netPremium = parseFloat(netPremiumInput.value.replace(/,/g, '')) || 0;
 
                         if (!isNaN(netPremium)) {
-                            let dstPercentage = 0.125;
+                            // let dstPercentage = 0.125;
                             let totalDST = netPremium * dstPercentage;
 
                             dstInput.value = totalDST.toLocaleString('en-US', {
@@ -1361,7 +1368,9 @@
                         }
 
                         // Calculate and display VAT
-                        let vatPercentage = 0.12;
+                        // let vatPercentage = 0.12;
+
+
                         let totalVAT = totalPremiumDue * vatPercentage;
                         vatInput.value = totalVAT.toLocaleString('en-US', {
                             minimumFractionDigits: 2,
@@ -1515,8 +1524,8 @@
 
                         let providerPremiumDue = selectedOption ? insuredPremiumDue : (limit * providerNetRate);
                         totalProviderPremiumDue += parseFloat(providerPremiumDue) || 0; // Accumulate provider premium due
-                        providerDST = totalProviderPremiumDue * 0.125;
-                        providerVAT = totalProviderPremiumDue * 0.12;
+                        providerDST = totalProviderPremiumDue * dstPercentage;
+                        providerVAT = totalProviderPremiumDue * vatPercentage;
                         providerLGT = totalProviderPremiumDue * selectLGT;
                         totalGrossProviderPremiumDue = totalProviderPremiumDue + providerDST + providerVAT + providerLGT;
                         totalRevenueCommission = (insuredNetAmount - totalGrossProviderPremiumDue).toFixed(2);
@@ -1552,7 +1561,7 @@
                     console.error("Invalid total revenue commission value!");
                     return; // Exit function if the total revenue commission value is not a number
                 }
-                let vat = Math.abs((totalRevenueCommission - totalExpenses) * 0.12 / 1.12);
+                let vat = Math.abs((totalRevenueCommission - totalExpenses) * vatPercentage / vatExcludedPercentage);
                 if (isNaN(vat)) {
                     console.error("VAT calculation resulted in NaN!");
                     return; // Exit function if the VAT calculation results in NaN
@@ -1704,8 +1713,8 @@
 
                         let providerPremiumDue = selectedOption ? insuredPremiumDue : (limit * providerNetRate);
                         totalProviderPremiumDue += parseFloat(providerPremiumDue) || 0; // Accumulate provider premium due
-                        providerDST = totalProviderPremiumDue * 0.125;
-                        providerVAT = totalProviderPremiumDue * 0.12;
+                        providerDST = totalProviderPremiumDue * dstPercentage;
+                        providerVAT = totalProviderPremiumDue * vatPercentage;
                         providerLGT = totalProviderPremiumDue * selectLGT;
                         totalGrossProviderPremiumDue = totalProviderPremiumDue + providerDST + providerVAT + providerLGT;
                         totalRevenueCommission = (insuredNetAmount - totalGrossProviderPremiumDue).toFixed(2);

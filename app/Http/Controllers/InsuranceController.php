@@ -12,6 +12,11 @@ use App\Models\InsuredQuotationDetails;
 use App\Models\CommisionRevenue;
 use App\Models\CommisionRevenueDetails;
 
+use App\Models\Lgt;
+use App\Models\Dst;
+use App\Models\Vat;
+
+
 use DB;
 
 class InsuranceController extends Controller
@@ -55,6 +60,18 @@ class InsuranceController extends Controller
         ->where('id', $productId)
         ->value('insurance_products.product_name');
 
+        $lgts = DB::table('lgts')
+        ->select('lgt_percentage','lgt_location')
+        ->get();
+
+        $dsts = DB::table('dsts')
+        ->select('dst_percentage')
+        ->get();
+
+        $vats = DB::table('vats')
+        ->select('vat_percentage', 'excluded_percentage')
+        ->get();
+
         $providerProduct = DB::table('provider_products')
             ->where('insurance_provider_id', $providerId)
             ->where('insurance_product_id', $productId)
@@ -81,7 +98,15 @@ class InsuranceController extends Controller
             // DD($groupedRates);
 
             // Pass $computationRates data to the view
-            return view('Users/Sales_Associate/Insurance/form_quotation', compact('productName', 'computationRates','groupedRates'));
+            return view('Users/Sales_Associate/Insurance/form_quotation',
+
+                compact('productName',
+                        'computationRates',
+                        'groupedRates',
+                        'lgts',
+                        'dsts',
+                        'vats'
+                    ));
         } else {
             // Handle case when no computation rates are found for the selected category and provider
             return redirect()->route('insurance.products', ['providerId' => $providerId])->with('error', 'No computation rates found for this category and provider.');
